@@ -93,6 +93,7 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
+            "codeCoverage": true,
             "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
@@ -106,5 +107,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "2c37b8e9-de45-4762-bf39-a754e834905f"
   }
 }
