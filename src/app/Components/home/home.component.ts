@@ -20,7 +20,6 @@ export class HomeComponent {
     private postService: PostService,
     private localStorageService: LocalStorageService,
     private sharedService: SharedService,
-    private router: Router,
     private headerMenusService: HeaderMenusService
   ) {
     this.showButtons = false;
