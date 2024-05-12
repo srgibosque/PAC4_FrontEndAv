@@ -33,34 +33,6 @@ export class HeaderComponent implements OnInit {
     );
   }
 
-  dashboard(): void {
-    this.router.navigateByUrl('dashboard');
-  }
-
-  home(): void {
-    this.router.navigateByUrl('home');
-  }
-
-  login(): void {
-    this.router.navigateByUrl('login');
-  }
-
-  register(): void {
-    this.router.navigateByUrl('register');
-  }
-
-  adminPosts(): void {
-    this.router.navigateByUrl('posts');
-  }
-
-  adminCategories(): void {
-    this.router.navigateByUrl('categories');
-  }
-
-  profile(): void {
-    this.router.navigateByUrl('profile');
-  }
-
   logout(): void {
     this.localStorageService.remove('user_id');
     this.localStorageService.remove('access_token');
@@ -72,6 +44,10 @@ export class HeaderComponent implements OnInit {
 
     this.headerMenusService.headerManagement.next(headerInfo);
 
-    this.router.navigateByUrl('home');
+    this.navigationTo('home');
+  }
+
+  navigationTo(url: string){
+    this.router.navigateByUrl(url);
   }
 }
