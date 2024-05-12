@@ -1,6 +1,6 @@
 import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
 import { CategoryDTO } from "../Models/category.dto";
-import { CategoryService } from "./category.service";
+import { CategoryService, deleteResponse } from "./category.service";
 import { TestBed } from "@angular/core/testing";
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from "@angular/core";
 
@@ -69,6 +69,66 @@ describe('CategoryService', () => {
 
     //Llancem la petició, més aviat la simulem
     req.flush(categoryList);
+  });
+
+  it('GET method and getCategoriesById return a category', () => {
+    service.getCategoryById('1').subscribe((resp: CategoryDTO) => {
+      expect(resp).toEqual(categoryList[0]);
+    });
+
+    const req = httpMock.expectOne('http://localhost:3000/categories/1');
+    expect(req.request.method).toBe('GET');
+
+    req.flush(categoryList[0]);
+  });
+
+  it('POST method and createCategory returns the new category', () => {
+    let category: CategoryDTO = {
+      userId: '',
+      categoryId: '4',
+      css_color: '',
+      description: '',
+      title: '',
+    }
+    service.createCategory(category).subscribe((resp: CategoryDTO) => {
+      expect(resp).toEqual(category);
+    });
+
+    const req = httpMock.expectOne('http://localhost:3000/categories');
+    expect(req.request.method).toBe('POST');
+    expect(req.request.body).toBe(category);
+
+    req.flush(category);
+  });
+
+  it('PUT method and updateCategory returns the updated Category', () => {
+    let category: CategoryDTO = {
+      userId: '',
+      categoryId: '4',
+      css_color: '',
+      description: '',
+      title: 'new title',
+    }
+    service.updateCategory('4', category).subscribe((resp: CategoryDTO) => {
+      expect(resp).toEqual(category);
+    });
+
+    const req = httpMock.expectOne('http://localhost:3000/categories/4');
+    expect(req.request.method).toBe('PUT');
+    expect(req.request.body).toBe(category);
+
+    req.flush(category);
+  });
+
+  it('DELETE method and deleteCategory returns an array of Categories with the deleted category', () => {
+    service.deleteCategory('3').subscribe((resp: deleteResponse) => {
+      expect(resp.affected).toEqual(1);
+    });
+
+    const req = httpMock.expectOne('http://localhost:3000/categories/3');
+    expect(req.request.method).toBe('DELETE');
+
+    req.flush({affected: 1});
   });
 
 });
