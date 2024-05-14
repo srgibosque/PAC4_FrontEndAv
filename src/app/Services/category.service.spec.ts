@@ -120,7 +120,7 @@ describe('CategoryService', () => {
     req.flush(category);
   });
 
-  it('DELETE method and deleteCategory returns an array of Categories with the deleted category', () => {
+  it('DELETE method and deleteCategory returns the number of deleted categories', () => {
     service.deleteCategory('3').subscribe((resp: deleteResponse) => {
       expect(resp.affected).toEqual(1);
     });
