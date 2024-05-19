@@ -21,7 +21,7 @@ describe('HomeComponent', () => {
       providers: [PostService],
       // added to avoid errors
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
-    })
+    }).compileComponents();
   });
 
   // before each test we instantiate the component
@@ -45,7 +45,7 @@ describe('HomeComponent', () => {
     // Spy to simulate the 'getPosts' method form the service
     // we indicate that it will return a list of posts. We use 'of' since it return an observable
     const spy = spyOn(postService, 'getPosts').and.returnValue(of(listPosts));
-    // call the priced method 'loadPosts'
+    // call the prived method 'loadPosts'. '[]' is used to access a private method
     component['loadPosts']();
     //we expect from the 'getPosts' method to be called
     expect(spy).toHaveBeenCalled();
