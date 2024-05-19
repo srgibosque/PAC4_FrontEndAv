@@ -3,6 +3,7 @@ import { HeaderComponent } from "./header.component";
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from "@angular/core";
 import { RouterTestingModule } from "@angular/router/testing";
 import { Router } from "@angular/router";
+import { By } from "@angular/platform-browser";
 
 class TemporalComponentForRoutes {}
 
@@ -83,5 +84,35 @@ describe('HeaderComponent', () => {
     const spy = spyOn(router, 'navigateByUrl');
     component.navigationTo('categories');
     expect(spy).toHaveBeenCalledWith('categories');
+  });
+
+  it('should check that items home, dashboard, login and register exist when we are not authenticated', () => {
+    component.showNoAuthSection = true;
+    component.showAuthSection = false;
+    fixture.detectChanges();
+    
+    const buttons = fixture.debugElement.queryAll(By.css('button'));
+    const buttonLabels = buttons.map(button => button.nativeElement.textContent.trim());
+
+    expect(buttonLabels).toContain('Home');
+    expect(buttonLabels).toContain('Dashboard');
+    expect(buttonLabels).toContain('Login');
+    expect(buttonLabels).toContain('Register');
+  });
+  
+  it('should check that items home, dashboard, admin posts, admin categories, profile and logout exist when we are not authenticated', () => {
+    component.showNoAuthSection = false;
+    component.showAuthSection = true;
+    fixture.detectChanges();
+    
+    const buttons = fixture.debugElement.queryAll(By.css('button'));
+    const buttonLabels = buttons.map(button => button.nativeElement.textContent.trim());
+
+    expect(buttonLabels).toContain('Home');
+    expect(buttonLabels).toContain('Dashboard');
+    expect(buttonLabels).toContain('Admin posts');
+    expect(buttonLabels).toContain('Admin categories');
+    expect(buttonLabels).toContain('Profile');
+    expect(buttonLabels).toContain('Logout');
   });
 });
